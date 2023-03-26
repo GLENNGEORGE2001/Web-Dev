@@ -3,6 +3,9 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
 const _ = require('lodash');
+const mongoose = require('mongoose')
+
+mongoose.connect('mongodb://127.0.0.1:27017/blogpostsDB')
 
 
 const homeStartingContent = "Lacus vel facilisis volutpat est velit egestas dui id ornare. Semper auctor neque vitae tempus quam. Sit amet cursus sit amet dictum sit amet justo. Viverra tellus in hac habitasse. Imperdiet proin fermentum leo vel orci porta. Donec ultrices tincidunt arcu non sodales neque sodales ut. Mattis molestie a iaculis at erat pellentesque adipiscing. Magnis dis parturient montes nascetur ridiculus mus mauris vitae ultricies. Adipiscing elit ut aliquam purus sit amet luctus venenatis lectus. Ultrices vitae auctor eu augue ut lectus arcu bibendum at. Odio euismod lacinia at quis risus sed vulputate odio ut. Cursus mattis molestie a iaculis at erat pellentesque adipiscing.";
@@ -13,13 +16,29 @@ const app = express();
 
 var contents = [];
 
+const blogScheme = mongoose.Schema({
+  title:String,
+  content:String
+});
+
+const Blog = mongoose.model('Blog',blogScheme);
+
+
+
 app.set('view engine', 'ejs');
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 
 app.get('/',function(req,res){
-  res.render('home', {startingContent:contents});
+  Blog.find()
+  .then(function(contents){
+    res.render('home', {startingContent:contents});
+  })
+  .catch(function(err){
+    console.log(err);
+  });
+  
 })
 
 app.get('/about', function(req, res){
@@ -31,13 +50,13 @@ app.get('/contact', function(req, res){
 })
 
 app.get('/posts/:postID', function(req, res){
-  contents.forEach(function(element){
-    if(_.lowerCase(req.params.postID) === _.lowerCase(element.title))
-        {
-          res.render('post', {title:element.title, contentBody:element.content})
-        }else{
-          console.log('Not a Match')
-        }
+
+  Blog.findById({_id:req.params.postID})
+  .then(function(element){
+    res.render('post', {title:element.title, contentBody:element.content})
+  })
+  .catch(function(err){
+    console.log(err);
   });
 });
 
@@ -46,18 +65,20 @@ app.get('/compose', function(req, res){
 });
 
 app.post('/compose', function(req, res){
-  contents.push({
+
+  const blog = new Blog({
     title: req.body.newEntry,
     content: req.body.contentBody
+  })
+  blog.save()
+  .then(function(){
+    res.redirect('/');
+  })
+  .catch(function(err){
+    console.log(err);
   });
-  res.redirect('/');
+  
 });
-
-
-
-
-
-
 
 app.listen(3000, function() {
   console.log("Server started on port 3000");

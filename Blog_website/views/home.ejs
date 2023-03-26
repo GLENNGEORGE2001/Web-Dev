@@ -2,7 +2,7 @@
     <h1>Home</h1>
     <% startingContent.forEach(function(element){ %>
         <h2><%= element.title %></h2>
-            <p><%= element.content.substr(0, 100)+'....' %><a href= 'posts/<%=element.title%>' >Read More</a></p>
+            <p><%= element.content.substr(0, 100)+'....' %><a href= 'posts/<%=element._id%>' >Read More</a></p>
            
     <% }); %>
 <%- include('partials/footer'); -%>
