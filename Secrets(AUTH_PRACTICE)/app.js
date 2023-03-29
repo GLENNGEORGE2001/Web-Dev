@@ -8,6 +8,7 @@ const passport = require('passport');
 const passportLocalMongoose = require('passport-local-mongoose');
 const googleStrategy = require('passport-google-oauth20').Strategy;
 const findOrCreate = require('mongoose-findorcreate');
+const facebookStrategy = require('passport-facebook').Strategy;
 
 mongoose.connect('mongodb://127.0.0.1:27017/userDB')
 // mongoose.set('useCreateIndex',true);
@@ -30,6 +31,7 @@ const userSchema = new mongoose.Schema({
     password: String,
     googleId: String,
     secret: String,
+    facebookId: String
 });
 
 userSchema.plugin(passportLocalMongoose);
@@ -66,6 +68,19 @@ passport.use(new googleStrategy({
   }
 ));
 
+passport.use(new facebookStrategy({
+    clientID: process.env.FACEBOOK_CLIENT_ID,
+    clientSecret: process.env.FACEBOOK_SECRET,
+    callbackURL: "http://localhost:3000/auth/facebook/callback"
+  },
+  function(accessToken, refreshToken, profile, cb) {
+    console.log(profile);
+    User.findOrCreate({ facebookId: profile.id }, function (err, user) {
+        return cb(err, user);
+    });
+  }
+));
+
 app.get('/', function(req, res){
     res.render('home');
 });
@@ -73,12 +88,17 @@ app.get('/', function(req, res){
 app.get('/auth/google',
   passport.authenticate('google', { scope: ['profile'] }));
 
-app.get('/auth/google', function(req, res){
-    passport.authenticate('google', {scope:["profile"]});
-})
+app.get('/auth/facebook',
+    passport.authenticate('facebook', {scope:"public_profile"}));
 
 app.get('/auth/google/callback', 
   passport.authenticate('google', { failureRedirect: '/login' }),
+  function(req, res) {
+    res.redirect('/secrets');
+  });
+
+  app.get('/auth/facebook/callback', 
+  passport.authenticate('facebook', { failureRedirect: '/login' }),
   function(req, res) {
     res.redirect('/secrets');
   });
