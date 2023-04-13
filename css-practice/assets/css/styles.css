@@ -1,0 +1,306 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+li {
+    list-style: none;
+}
+
+html {
+    font: normal 16px sans-serif;
+    color: #555;
+}
+
+hr {
+	width: 250px;
+	height: 3px;
+	background-color: #3f51b5;
+	border: 0;
+	margin-bottom: 50px;
+}
+
+.grid {
+	width: 100%;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+
+section h3.title {
+	text-transform: capitalize;
+	font: bold 32px "Open Sans", sans-serif;
+	margin-bottom: 30px;
+	text-align: center;
+    color: rgb(73, 73, 73);
+}
+
+section p {
+	max-width: 775px;
+	padding: 0 20px;
+	margin-bottom: 30px;
+	text-align: center;
+    color: rgb(73, 73, 73);
+}
+
+header a {
+    text-decoration: none;
+    color: white;
+}
+
+nav a {
+    margin: 0px 10px;
+    opacity: 0.75;
+}
+
+a:hover {
+    opacity: 1;
+}
+
+header {
+    z-index: 1;
+    position: absolute;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 40px 120px 0px;
+    animation: 1s fadein 0.5s forwards;
+    opacity: 0;
+}
+
+@keyframes fadein {
+    100% {
+        opacity: 1;
+    }
+}
+
+header h2 {
+    font: "Quicksand", sans-serif;
+}
+
+section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 100px 40px;
+}
+
+@media (max-width: 800px){
+    header {
+        flex-direction: column;
+    }
+    header h2 {
+        margin-bottom: 20px;
+    }
+}
+
+/* Hero Styling */
+
+.hero {
+    color: white;
+    position: relative;
+    justify-content: center;
+    text-align: center;
+    min-height: 100vh;
+}
+
+.hero .background-image {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-size: cover;
+	background-color: #80a3db;
+}
+
+.hero h1{
+    font: bold 60px "Open Sans", sans-serif;
+    margin-bottom: 15px;
+}
+
+.hero h3 {
+    font: normal 28px "Open Sans", sans-serif;
+    margin-bottom: 40px;
+}
+
+button {
+    background-color: rgb(50, 61, 213);
+    padding: 15px 34px;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: bolder;
+    border: none;
+    color: white;
+    opacity: 0.75;
+    transition-duration: 0.2s;
+    font-size: 15px;
+}
+
+button:hover {
+    opacity: 1;
+}
+
+.hero-content-area {
+    opacity: 0;
+    margin-top: 100px;
+    animation: 1s slidefade 1s forwards;
+}
+
+@keyframes slidefade {
+    100% {
+        opacity: 1;
+        margin: 0;
+    }
+}
+
+@media (max-width: 800px) {
+    .hero {
+        min-height: 600px;
+        padding-top: 90px;
+    }
+
+    .hero h1 {
+        font-size: 50px;
+    }
+
+    .hero h3 {
+        font-size: 25px;
+    }
+}
+
+/* Destination Section Styling */
+
+.destinations .grid li {
+	height: 350px;
+	padding: 20px;
+	background-clip: content-box;
+	background-size: cover;
+	background-position: center;
+}
+
+.destinations .grid li.small {
+	flex-basis: 30%;
+}
+
+.destinations .grid li.large {
+	flex-basis: 70%;
+}
+
+@media (max-width: 1100px) {
+    .destinations .grid li.small,
+    .destinations .grid li.large {
+        flex-basis: 50%;
+    }
+}
+
+@media (max-width: 800px) {
+    .destinations .grid li.small,
+    .destinations .grid li.large {
+        flex-basis: 100%;
+    }
+}
+
+
+/* Packages Decoration */
+
+.packages {
+    background-color: rgb(238, 237, 237);
+}
+
+.packages li {
+    flex-basis: 50%;
+    text-align: center; 
+}
+
+.packages hr {
+    margin-bottom: 90px;
+}
+
+i {
+    margin: 30px 0px 30px;
+    color: rgb(145, 145, 246);
+}
+
+.packages h4 {
+    font-size: 25px;
+    margin-bottom: 30px; 
+}
+
+.packages p {
+    margin: 0px 42px;
+    padding: 0px 40px;
+    line-height: 2;
+    margin-bottom: 50px;
+}
+
+@media (max-width: 800px) {
+    .packages li {
+        flex-basis: 100%;
+    }
+}
+
+/* Testimonial Styling */
+
+.testimonials p.quote{
+    font-size: 20px;
+    margin: 40px 0px 30px;
+    line-height: 2;
+}
+
+.testimonials p.author{
+    margin: 0px 0px 10px;
+}
+
+/* More section Styling */
+
+.more {
+    background-color: rgb(238, 237, 237);
+    padding: 105px 0px;
+}
+
+.more p {
+    line-height: 2;
+}
+
+.more input{
+    padding: 15px 200px 15px 10px;
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+/* Footer Styling */
+
+footer {
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(83, 107, 118);
+    justify-content: center;
+    align-items: center;
+}
+
+footer ul {
+    padding: 0;
+    display: flex;
+}
+
+footer p {
+    text-align: center;
+    margin: 20px 20px 0px;
+    color: rgb(202, 201, 201);
+}
+
+footer li {
+    margin: 0px 7px;
+}
+
+footer i {
+    color: rgb(202, 201, 201);
+}
+
+footer i:hover {
+    color: rgb(245, 245, 245);
+}

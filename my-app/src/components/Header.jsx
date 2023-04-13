@@ -1,7 +1,8 @@
 import React from "react";
+import HighlightIcon from '@mui/icons-material/Highlight';
 
 function Header(){
-    return <header>Keeper App</header>
+    return <header><HighlightIcon />Keeper App</header>
 }
 
 export default Header;
